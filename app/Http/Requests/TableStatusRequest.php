@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PaymentRequest extends FormRequest
+class TableStatusRequest extends FormRequest
 {
     public function authorize(){ 
         return true; 
@@ -12,9 +12,7 @@ class PaymentRequest extends FormRequest
 
     public function rules(){ 
         return [
-            'order_id' => 'required|exists:orders,id',
-            'amount' => 'required|numeric|min:0',
-            'method' => 'required|in:cash,card,other'
+            'status' => 'required|in:open,occupied'
         ]; 
     }
 }
