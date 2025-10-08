@@ -12,7 +12,7 @@ class OpenOrderRequest extends FormRequest
 
     public function rules(){ 
         return [
-            'table_id' => 'required|exists:tables,id'
+            'table_id' => 'required|exists:book_tables,id'
         ]; 
     }
 }

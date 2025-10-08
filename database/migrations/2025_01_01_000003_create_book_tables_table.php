@@ -9,8 +9,9 @@ return new class extends Migration {
         Schema::create('book_tables', function (Blueprint $table){
             $table->id();
             $table->string('name')->unique();
-            $table->enum('status', ['open','occupied','inactive','reserved'])->default('open');
+            $table->enum('status', ['available','occupied','inactive','reserved'])->default('available');
             $table->integer('capacity')->default(4);
+            $table->string('floor')->nullable();
             $table->timestamps();
         });
     }

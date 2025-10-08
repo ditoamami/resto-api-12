@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TableStatusRequest;
 use App\Models\BookTable;
 use App\Services\TableService;
+use Illuminate\Http\Request;
+
 
 class TableController extends Controller
 {
@@ -19,8 +21,8 @@ class TableController extends Controller
         return $this->service->listTables();
     }
 
-    public function updateStatus(BookTable $table, TableStatusRequest $req)
+    public function updateStatus(Request $request, $id)
     {
-        return $this->service->updateStatus($table->id, $req->validated()['status']);
+        return $this->service->updateStatus((int)$id, $request->status);
     }
 }

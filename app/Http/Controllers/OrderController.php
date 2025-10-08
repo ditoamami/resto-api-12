@@ -22,7 +22,7 @@ class OrderController extends Controller
     {
         return $order->load('items.menu', 'table');
     }
-    public function open(OpenOrderRequest $req)
+    public function openOrder(OpenOrderRequest $req)
     {
         $userId = auth()->id();
         return $this->service->openOrder($req->validated()['table_id'], $userId);
@@ -32,7 +32,7 @@ class OrderController extends Controller
         $data = $req->validated();
         return $this->service->addItem($data['order_id'], $data['menu_id'], $data['quantity'] ?? 1);
     }
-    public function close(CloseOrderRequest $req)
+    public function closeOrder(CloseOrderRequest $req)
     {
         return $this->service->closeOrder($req->validated()['order_id']);
 }

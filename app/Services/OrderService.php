@@ -18,9 +18,9 @@ class OrderService
     public function openOrder(int $tableId, ?int $userId){
         $table = BookTable::findOrFail($tableId);
         
-        if($table->status !== 'open') 
-            throw new \Exception('Table is not open');
-        
+        if($table->status !== 'available') 
+            throw new \Exception('Table is not available');
+
         return DB::transaction(function() use($table,$userId){        
             $order = Order::create([
                 'table_id' => $table->id,

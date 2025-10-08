@@ -15,7 +15,7 @@ class Order extends Model
 
     public function table()
     {
-        return $this->belongsTo(Table::class);
+        return $this->belongsTo(BookTable::class);
     }
 
     public function user()
