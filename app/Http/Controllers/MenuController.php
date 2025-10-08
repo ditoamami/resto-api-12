@@ -12,7 +12,6 @@ class MenuController extends Controller
     public function __construct(MenuService $service)
     {
         $this->service = $service;
-        $this->middleware('auth:sanctum');
     }
 
     public function index()
