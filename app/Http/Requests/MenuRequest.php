@@ -15,6 +15,7 @@ class MenuRequest extends FormRequest
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
+            'category' => 'required|string|max:255',
             'is_active' => 'sometimes|boolean'
         ]; 
     }

@@ -7,7 +7,7 @@ class MenuService
 {
     public function list()
     {
-        return Menu::orderBy('name')->get();
+        return Menu::orderBy('created_at', 'asc')->get();
     }
 
     public function create(array $data)
