@@ -6,12 +6,16 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
+use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
 
 // =========================
 // 🔐 AUTH (Public routes)
 // =========================
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
+
+
+Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'show']);
 
 // =========================
 // 🔒 PROTECTED ROUTES
