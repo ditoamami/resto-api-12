@@ -10,7 +10,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('table_id')->constrained('book_tables')->onDelete('cascade');
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
-            $table->enum('status',['open','closed'])->default('open');
+            $table->enum('status',['open','closed','paid'])->default('open');
             $table->decimal('total', 12, 2)->default(0);
             $table->timestamps();
         });

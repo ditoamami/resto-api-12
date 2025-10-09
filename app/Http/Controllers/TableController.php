@@ -1,28 +1,26 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TableStatusRequest;
 use App\Models\BookTable;
-use App\Services\TableService;
 use Illuminate\Http\Request;
-
 
 class TableController extends Controller
 {
-    protected $service;
-
-    public function __construct(TableService $s)
-    {
-        $this->service = $s;
-    }
-
     public function index()
     {
-        return $this->service->listTables();
+        // Ambil semua meja beserta order aktif dan item-itemnya
+        return BookTable::with(['currentOrder.items.menu'])->get();
     }
 
     public function updateStatus(Request $request, $id)
     {
-        return $this->service->updateStatus((int)$id, $request->status);
+        $table = BookTable::findOrFail($id);
+        $table->update(['table_status' => $request->status]);
+
+        return response()->json([
+            'message' => 'Status meja diperbarui.',
+            'table' => $table
+        ]);
     }
 }

@@ -15,7 +15,6 @@
     <h2>Restaurant Receipt</h2>
     <p><strong>Order ID:</strong> {{ $order->id }}</p>
     <p><strong>Table:</strong> {{ $order->table->name }}</p>
-    <p><strong>Cashier:</strong> {{ $order->user->name }}</p>
     <p><strong>Date:</strong> {{ $order->created_at->format('d M Y H:i') }}</p>
 
     <table>
