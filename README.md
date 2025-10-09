@@ -1,62 +1,165 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🍽️ Restaurant POS API (Laravel)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi **Point of Sale (POS)** sederhana berbasis **Laravel REST API**, digunakan untuk mengelola menu, pesanan, meja, dan pengguna (pelayan & kasir).
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Fitur Utama
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Autentikasi & Role**
+  - Login menggunakan email & password.
+  - Role: `pelayan`, `kasir`, `admin`.
+- **Manajemen Menu**
+  - Tambah, ubah, hapus menu (makanan, minuman, snack).
+  - Soft delete dengan relasi aman ke `order_items`.
+- **Manajemen Order**
+  - Pelayan membuat pesanan (open → paid → closed).
+  - Kasir dapat menghasilkan **PDF Receipt**.
+- **Manajemen Meja**
+  - Status meja: `available`, `occupied`, `reserved`, `inactive`.
+- **Seeder Otomatis**
+  - Contoh data untuk user, menu, dan meja.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🧱 Persyaratan Sistem
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+| Komponen | Versi Minimum |
+|-----------|----------------|
+| PHP | 8.1 |
+| Composer | 2.x |
+| Laravel | 10.x |
+| MySQL / MariaDB | 5.7 / 10.4 |
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## ⚙️ Instalasi
 
-## Laravel Sponsors
+1. **Clone Repository**
+   ```bash
+   git clone https://github.com/username/restaurant-pos-api.git
+   cd restaurant-pos-api
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+2. **Install Dependencies**
+   ```bash
+   composer install
+   ```
 
-### Premium Partners
+3. **Salin & Konfigurasi `.env`**
+   ```bash
+   cp .env.example .env
+   ```
+   Sesuaikan pengaturan database di `.env`:
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=resto_pos
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+4. **Generate Key Aplikasi**
+   ```bash
+   php artisan key:generate
+   ```
 
-## Contributing
+5. **Jalankan Migration & Seeder**
+   ```bash
+   php artisan migrate --seed
+   ```
+   Seeder akan menambahkan data:
+   - 4 user (`pelayan` & `kasir`)
+   - beberapa meja (`book_tables`)
+   - contoh menu (`menus`)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+6. **Jalankan Server**
+   ```bash
+   php artisan serve
+   ```
+   Akses di:  
+   👉 `http://127.0.0.1:8000`
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 🔑 Autentikasi API
 
-## Security Vulnerabilities
+Gunakan **token-based auth (Laravel Sanctum)** untuk mengamankan API.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Login Endpoint
+```
+POST /api/login
+```
+**Body:**
+```json
+{
+  "email": "andi@resto.com",
+  "password": "andi"
+}
+```
+**Response:**
+```json
+{
+  "user": {
+    "id": 1,
+    "name": "Andi Pelayan",
+    "role": "pelayan"
+  },
+  "token": "1|abc123..."
+}
+```
 
-## License
+Gunakan token pada header:
+```
+Authorization: Bearer <token>
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# resto-api-12
+---
+
+## 📘 API Endpoint Utama
+
+| Resource | Method | Endpoint | Deskripsi |
+|-----------|--------|-----------|------------|
+| **Menu** | GET | `/api/menus` | List semua menu |
+| | POST | `/api/menus` | Tambah menu |
+| | PUT | `/api/menus/{id}` | Update menu |
+| | DELETE | `/api/menus/{id}` | Soft delete menu |
+| **Order** | GET | `/api/orders` | List pesanan |
+| | POST | `/api/orders` | Buat pesanan baru |
+| | PUT | `/api/orders/{id}/pay` | Ubah status jadi *paid* |
+| | GET | `/api/payments/{id}/receipt` | Download PDF Receipt |
+| **Table** | GET | `/api/book-tables` | List meja |
+| | PUT | `/api/book-tables/{id}` | Update status meja |
+
+---
+
+## 👥 User Default
+
+| Nama | Email | Role | Password |
+|------|--------|-------|-----------|
+| Andi Pelayan | `andi@resto.com` | pelayan | andi |
+| Budi Pelayan | `budi@resto.com` | pelayan | budi |
+| Citra Kasir | `citra@resto.com` | kasir | citra |
+| Dewi Kasir | `dewi@resto.com` | kasir | dewi |
+
+---
+
+## 🧰 Tips Pengembangan
+
+- Gunakan **Postman / Thunder Client** untuk uji endpoint.
+- Jalankan perintah berikut untuk memperbarui DB tanpa data lama:
+  ```bash
+  php artisan migrate:fresh --seed
+  ```
+- Pastikan file `.env` memiliki:
+  ```
+  APP_DEBUG=true
+  LOG_CHANNEL=stack
+  ```
+
+---
+
+## 🧾 Lisensi
+
+Proyek ini menggunakan lisensi **MIT License** — bebas digunakan dan dimodifikasi untuk kebutuhan pengembangan.
