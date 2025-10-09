@@ -14,7 +14,7 @@ class PaymentRequest extends FormRequest
         return [
             'order_id' => 'required|exists:orders,id',
             'amount' => 'required|numeric|min:0',
-            'method' => 'required|in:cash,card,other'
+            'method' => 'required|in:cash,card,qris'
         ]; 
     }
 }

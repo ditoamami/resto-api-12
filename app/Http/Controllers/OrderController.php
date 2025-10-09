@@ -18,9 +18,9 @@ class OrderController extends Controller
     {
         return $this->service->listOrders();
     }
-    public function show(Order $order)
+    public function show($id)
     {
-        return $order->load('items.menu', 'table');
+        return $this->service->getOrderDetail((int)$id);
     }
     public function openOrder(OpenOrderRequest $req)
     {
@@ -35,5 +35,5 @@ class OrderController extends Controller
     public function closeOrder(CloseOrderRequest $req)
     {
         return $this->service->closeOrder($req->validated()['order_id']);
-}
+    }
 }

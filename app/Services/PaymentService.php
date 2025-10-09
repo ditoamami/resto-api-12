@@ -1,4 +1,6 @@
 <?php
+namespace App\Services;
+
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Payment;
 use App\Models\Order;
@@ -15,6 +17,9 @@ class PaymentService
             'method' => $method,
             'paid_at' => now()
         ]);
+
+        $order->status = 'paid';
+        $order->save();
         
         return $payment;
     }

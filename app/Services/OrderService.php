@@ -70,11 +70,19 @@ class OrderService
             $order->status = 'closed';
             $order->save();
             $table = $order->table;
-            $table->status = 'open';
+            $table->status = 'available';
             $table->save();
 
             return $order->load('items.menu','table');
         });
+    }
+
+    public function getOrderDetail(int $orderId)
+    {
+        $order = Order::with(['items.menu', 'table'])
+            ->findOrFail($orderId);
+
+        return $order;
     }
 
     public function listOrders(){

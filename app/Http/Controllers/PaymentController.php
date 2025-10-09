@@ -18,7 +18,7 @@ class PaymentController extends Controller
         return $this->service->pay($d['order_id'], $d['amount'], $d['method']);
     }
     
-    public function receiptPdf($orderId)
+    public function receipt($orderId)
     {
         return $this->service->generateReceiptPdf((int)$orderId);
     }
